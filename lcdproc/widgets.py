@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_imports, print_function, unicode_literals
+
 import urllib
 
 class StringWidget(object):

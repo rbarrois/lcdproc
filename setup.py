@@ -1,11 +1,10 @@
 #import ez_setup, os
 #ez_setup.use_setuptools()
-import os, sys
-from setuptools import setup, find_packages
 
-extra = {}
-if sys.version_info >= (3,):
-    extra['use_2to3'] = True
+from __future__ import print_function, unicode_literals
+
+import os
+from setuptools import setup, find_packages
 
 setup(
     name = "lcdproc",
@@ -17,5 +16,4 @@ setup(
     packages = find_packages(),
     scripts = [],
     include_package_data = True,
-    **extra
 )

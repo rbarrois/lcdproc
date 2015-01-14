@@ -1,4 +1,8 @@
-from widgets import StringWidget, TitleWidget, HBarWidget, VBarWidget, IconWidget, ScrollerWidget, FrameWidget,NumberWidget
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_imports, print_function, unicode_literals
+
+from .widgets import StringWidget, TitleWidget, HBarWidget, VBarWidget, IconWidget, ScrollerWidget, FrameWidget,NumberWidget
 
 
 class Screen(object):
@@ -220,4 +224,4 @@ class Screen(object):
     def del_widget(self, ref):
         """ Delete/Remove A Widget """
         self.server.request("widget_del %s %s" % (self.name, ref))
-        del(self.widgets[ref])
+        del self.widgets[ref] 

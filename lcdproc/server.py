@@ -1,8 +1,12 @@
+# -*- coding: utf-8 -*-
+
+from __future__ import absolute_imports, print_function, unicode_literals
+
 import telnetlib
 import urllib
 import select
 
-from screen import Screen
+from .screen import Screen
 
 
 class Server(object):
@@ -43,7 +47,9 @@ class Server(object):
         """ Request """
         
         self.tn.write((command_string + "\n").encode())
-        if self.debug: print "Telnet Request:  %s" % (command_string)
+        if self.debug:
+            print("Telnet Request:  %s" % (command_string,))
+
         while True:
             response = urllib.unquote(self.tn.read_until(b"\n").decode())
             if "success" in response:   # Normal successful reply
@@ -54,7 +60,8 @@ class Server(object):
                 break
             # TODO Keep track of which screen is displayed
             # Try again if response was key, menu or visibility notification.
-        if "huh" in response or self.debug: print "Telnet Response: %s" % (response[:-1])
+        if "huh" in response or self.debug:
+            print("Telnet Response: %s" % (response[:-1]))
         return response
 
 
@@ -67,7 +74,8 @@ class Server(object):
         """
         if select.select([self.tn], [], [], 0) == ([self.tn], [], []):
             response = urllib.unquote(self.tn.read_until(b"\n").decode())
-            if self.debug: print "Telnet Poll: %s" % (response[:-1])
+            if self.debug:
+                print("Telnet Poll: %s" % (response[:-1]))
             # TODO Keep track of which screen is displayed
             return response
         else:
@@ -88,7 +96,7 @@ class Server(object):
     def del_screen(self, ref):
         """ Delete/Remove Screen """
         self.request("screen_del %s" % (ref))
-        del(self.screens[ref])
+        del self.screens[ref]
 
         
     def add_key(self, ref, mode = "shared"):
@@ -100,7 +108,8 @@ class Server(object):
         """
         if ref not in self.keys:   
             response = self.request("client_add_key %s -%s" % (ref, mode))
-            if "success" not in response: return None
+            if "success" not in response:
+                return None
             self.keys.append(ref)
             return ref
 
